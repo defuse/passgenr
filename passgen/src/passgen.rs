@@ -1,6 +1,11 @@
 
 extern crate rand;
 
+// FIXME: I'm calling .len() on Strings and strs, that actually returns their UTF-8 byte length.
+// For this program it's probably better to just use byte string constants for the charsets and
+// then use Vec<u8>'s instead of strings.... then it's easier to keep the timing-safe lookup
+// (without having to write some (probably unsafe) code for timing-safe lookup in a Vec<T>.
+
 // FIXME: put the extern crate line in the proper place
 use self::rand::{OsRng, Rng};
 
