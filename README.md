@@ -46,7 +46,7 @@ TODO
 
 ## Security Details
 
-`passgenr` uses [OsRng](https://doc.rust-lang.org/rand/rand/struct.OsRng.html)
+**Randomness.** `passgenr` uses [OsRng](https://doc.rust-lang.org/rand/rand/struct.OsRng.html)
 as a randomness source, which reads directly from the operating system's CSPRNG
 (e.g. `getrandom(2)` or `/dev/urandom` on Linux, or `RtlGenRandom` on Windows).
 For a character set (or word set) of size N, the elements of the password are
