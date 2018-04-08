@@ -62,8 +62,8 @@ encrypted swap file/partition.
 against side-channel attacks. When you generate passwords with `passgenr` you
 should be sure that nobody untrustworthy can run code on the same machine (even
 as an unprivileged user), otherwise they might be able to extract some
-information about the passwords being generated through side-channels. Adding
-side-channel defenses to `passgenr` is
+information about the passwords through side-channels. Adding side-channel
+defenses to `passgenr` is
 [planned](https://github.com/defuse/passgenr/issues/4), once the technology
 becomes available to stable Rust.
 
