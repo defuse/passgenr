@@ -68,6 +68,6 @@ becomes available to stable Rust.
 
 **Audit Status.** While its author is careful and prioritizes security,
 `passgenr` has not yet been audited by a professional third-party. If you have
-experience of doing security audits and you would like to contribute one, please
+experience doing security audits and you would like to contribute one, please
 get in touch!
 
