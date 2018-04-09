@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/defuse/passgenr.svg?branch=master)](https://travis-ci.org/defuse/passgenr)
 [![crates.io](https://img.shields.io/crates/d/passgenr.svg)](https://crates.io/crates/passgenr)
 [![crates.io](https://img.shields.io/crates/v/passgenr.svg)](https://crates.io/crates/passgenr)
-[![docs.rs](https://docs.rs/passgenr/badge.svg)](https://docs.rs/passgenr/0.1.0/passgenr/)
+[![docs.rs](https://docs.rs/passgenr/badge.svg)](https://docs.rs/passgenr/)
 
 `passgenr` is a Rust library for generating cryptographically-secure random
 passwords. It is a port of my earlier password generating tool,
@@ -53,7 +53,7 @@ $ passgenr --hex -p 5
 ## Library
 
 This library is [on crates.io](https://crates.io/crates/passgenr). The
-documentation is hosted [on docs.rs](https://docs.rs/passgenr/0.1.0/passgenr/).
+documentation is hosted [on docs.rs](https://docs.rs/passgenr/).
 
 To use the library, add the following to your `Cargo.toml`...
 
