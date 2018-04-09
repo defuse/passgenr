@@ -6,3 +6,14 @@
 4. Run `cargo test`
 5. Run `cargo package`
 6. Run `cargo publish.
+
+## New Wordlist
+
+For future reference, if I ever change the wordlist, the command to get the
+stuff to copy and paste into `charsets.rs` is:
+
+```
+cat resources/wordlist.txt | sed 's/^/"/' | sed 's/$/",/'
+```
+
+Make sure to verify that the new wordlist doesn't contain duplicate words.
