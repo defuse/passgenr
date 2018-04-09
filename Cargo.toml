@@ -4,6 +4,7 @@ version = "0.1.0"
 authors = ["Taylor Hornby <taylor@defuse.ca>"]
 license = "MIT"
 repository = "https://github.com/defuse/passgenr"
+documentation = "https://docs.rs/passgenr/0.1.0/passgenr/"
 description = "A library for generating cryptographically-secure passwords in Rust."
 
 [dependencies]
