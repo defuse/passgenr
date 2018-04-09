@@ -68,6 +68,15 @@ passgenr = "0.1"
 extern crate passgenr;
 ```
 
+...now you can generate a password...
+
+```
+assert_eq!(
+    20,
+    passgenr::random_password(passgenr::charsets::ASCII, 20, "").unwrap().len()
+);
+```
+
 ## Security Details
 
 **Randomness.** `passgenr` uses [OsRng](https://doc.rust-lang.org/rand/rand/struct.OsRng.html)
