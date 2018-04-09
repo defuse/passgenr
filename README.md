@@ -1,8 +1,5 @@
 # passgenr
 
-**THIS CODE IS UNDER CONSTRUCTION, IT SHOULD NOT BE RELIED ON TO GENERATE SECURE
-PASSWORDS YET.**
-
 [![Build Status](https://travis-ci.org/defuse/passgenr.svg?branch=master)](https://travis-ci.org/defuse/passgenr)
 
 `passgenr` is a Rust library for generating cryptographically-secure random
