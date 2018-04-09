@@ -4,6 +4,18 @@ pub mod charsets;
 
 use self::rand::{OsRng, Rng};
 
+/// Randomly generate a password made of `count` elements selected uniformly from `charset`,
+/// separated by `separator`.
+///
+///     assert_eq!(
+///         20,
+///         passgenr::random_password(passgenr::charsets::ASCII, 20, "").unwrap().len()
+///     );
+///
+/// The call will panic if `charset` contains fewer than two elements. The caller is responsible
+/// for ensuring that the elements of `charset` are distinct (this is not verified internally).
+///
+/// Common character sets (e.g. ASCII, ALPHANUMERIC) are available in the `charsets` module.
 pub fn random_password(charset: &[&str], count: usize, separator: &str) -> Result<String,std::io::Error> {
     Ok(random_password_elements(charset, count)?.join(separator))
 }

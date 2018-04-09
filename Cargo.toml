@@ -2,6 +2,9 @@
 name = "passgenr"
 version = "0.1.0"
 authors = ["Taylor Hornby <taylor@defuse.ca>"]
+license = "MIT"
+repository = "https://github.com/defuse/passgenr"
+description = "A library for generating cryptographically-secure passwords in Rust."
 
 [dependencies]
 rand = "0.4"

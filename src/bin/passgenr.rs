@@ -42,6 +42,7 @@ fn main() {
 
     for _ in 0..password_count {
         match charset {
+            // we'll panic on CSPRNG failure
             CommandLineCharset::Hex =>{
                 println!("{}", passgenr::random_password(passgenr::charsets::UPPERCASE_HEX, PASSWORD_LENGTH, "").unwrap());
             },
