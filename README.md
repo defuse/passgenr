@@ -8,13 +8,20 @@ PASSWORDS YET.**
 `passgenr` is a Rust library for generating cryptographically-secure random
 passwords. It is a port of my earlier password generating tool,
 [passgen](https://github.com/defuse/passgen) (which was written in C).
-`passgenr` also includes a command-line utility for generating passwords.
+`passgenr` also includes a command-line utility for generating passwords. Please
+read the [Security Details](#security-details) section below.
 
-## Build Instructions
+## Command-Line Utility
 
-TODO
+To build and install the command-line utility, run...
 
-## Command-Line Utility Examples
+```
+cargo build --bin passgenr --release
+```
+
+...and then install the `./target/release/passgenr` into your system.
+
+Here are some examples of how to use the command-line tool:
 
 ```
 $ passgenr --ascii
@@ -43,27 +50,23 @@ $ passgen --hex -p 5
 C2A980F8DFCC686F389B5CB96D30701C22D0B7B6BF2D732F7CD1364D81D949CC
 ```
 
-## Library Examples
+## Library
 
-This crate is on [crates.io TODO actual link](TODO). To use it, add it to your
-dependencies in `Cargo.toml`...
+This crate is on [crates.io TODO actual link](TODO). The documentation is hosted
+[here TODO](TODO).
+
+To use the library, add the following to your `Cargo.toml`...
 
 ```
 [dependencies]
 passgenr = "0.1"
 ```
 
-...and add this to your crate root (`lib.rs` if you're writing a library, or
-`main.rs` if you're writing a binary):
+...and add this line to your crate root...
 
 ```
 extern crate passgenr;
 ```
-
-TODO example
-
-TODO link to full docs
-
 
 ## Security Details
 
