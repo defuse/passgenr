@@ -1,103 +1,70 @@
-
 extern crate rand;
 
-// TODO: make this side-channel safe, probably with the timing-sheild crate,
-// once it becomes compilable with stable rust.
+pub mod charsets;
 
-// FIXME: put the extern crate line in the proper place
 use self::rand::{OsRng, Rng};
 
-pub const CHARSET_UPPERCASE_HEX: &[char] = &[
-    '0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'
-];
-pub const CHARSET_LOWERCASE_HEX: &[char] = &[
-    '0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'
-];
-pub const CHARSET_ALPHANUMERIC: &[char] = &[
-    'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
-    'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
-    '0','1','2','3','4','5','6','7','8','9'
-];
-pub const CHARSET_ASCII: &[char] = &[
-    '!','"','#','$','%','&','\'','(',')','*','+',',','-','.','/',
-    '0','1','2','3','4','5','6','7','8','9',
-    ':',';','<','=','>','?','@',
-    'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
-    '[','\\',']','^','_','`',
-    'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
-    '{','|','}','~'
-];
-pub const CHARSET_DECIMAL_DIGIT: &[char] = &[
-    '0','1','2','3','4','5','6','7','8','9'
-];
-pub const CHARSET_LOWERCASE_ALPHABETIC: &[char] = &[
-    'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'
-];
-
-// TODO: make charset type which enforces non-duplicate characters
-
-pub fn random_password_characters(charset: &[char], length: usize) -> Vec<char> {
-    let mut password = Vec::<char>::with_capacity(length);
-
-    let mut rng = match OsRng::new() {
-        Ok(rng) => { rng },
-        Err(_) => { panic!("Random number generator failure."); }
-    };
-
-    for _ in 0..length {
-        password.push(sample_random_char(&mut rng, &charset));
-    }
-
-    password
+pub fn random_password(charset: &[&str], count: usize, separator: &str) -> Result<String,std::io::Error> {
+    Ok(random_password_elements(charset, count)?.join(separator))
 }
 
-// pub fn random_password_words(num_words: usize) -> Vec<&'static str> {
-// 
-// }
-
-fn sample_random_char(rng: &mut OsRng, charset: &[char]) -> char {
-    let mask = charset.len().next_power_of_two() - 1;
-    let mut random_index = rng.next_u32() as usize & mask;
-    while random_index >= charset.len() {
-        random_index = rng.next_u32() as usize & mask;
+fn random_password_elements<'a>(charset: &[&'a str], count: usize) -> Result<Vec<&'a str>,std::io::Error> {
+    if charset.len() < 2 {
+        panic!("The character set is too small (only 0 or 1 elements) to generate distinct passwords!");
     }
 
-    charset[random_index]
+    if slice_contains_duplicates(charset) {
+        panic!("The character set contained duplicate elements!");
+    }
+
+    let mut password_elts = Vec::<&str>::with_capacity(count);
+    let mut rng = OsRng::new()?;
+
+    for _ in 0..count {
+        password_elts.push(rng.choose(charset).unwrap());
+    }
+
+    Ok(password_elts)
+}
+
+fn slice_contains_duplicates<T: Clone + Ord>(slice: &[T]) -> bool {
+    let unique_elts : Vec<T> = {
+        let mut elts = slice.to_vec();
+        elts.sort();
+        elts.dedup();
+        elts
+    };
+    slice.len() != unique_elts.len()
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
 
-    const ALL_INCLUDED_CHARSETS: [&[char]; 6] = [
-            &CHARSET_UPPERCASE_HEX,
-            &CHARSET_LOWERCASE_HEX,
-            &CHARSET_ALPHANUMERIC,
-            &CHARSET_ASCII,
-            &CHARSET_DECIMAL_DIGIT,
-            &CHARSET_LOWERCASE_ALPHABETIC,
+    static ALL_INCLUDED_CHARSETS: [&[&str]; 7] = [
+        charsets::UPPERCASE_HEX,
+        charsets::LOWERCASE_HEX,
+        charsets::ALPHANUMERIC,
+        charsets::ASCII,
+        charsets::DECIMAL_DIGIT,
+        charsets::LOWERCASE_ALPHABETIC,
+        charsets::WORDS,
     ];
 
     #[test]
     fn expected_charset_sizes() {
-        assert_eq!(CHARSET_UPPERCASE_HEX.len(), 16);
-        assert_eq!(CHARSET_LOWERCASE_HEX.len(), 16);
-        assert_eq!(CHARSET_ALPHANUMERIC.len(), 26*2 + 10);
-        assert_eq!(CHARSET_ASCII.len(), 94);
-        assert_eq!(CHARSET_DECIMAL_DIGIT.len(), 10);
-        assert_eq!(CHARSET_LOWERCASE_ALPHABETIC.len(), 26);
+        assert_eq!(charsets::UPPERCASE_HEX.len(), 16);
+        assert_eq!(charsets::LOWERCASE_HEX.len(), 16);
+        assert_eq!(charsets::ALPHANUMERIC.len(), 26*2 + 10);
+        assert_eq!(charsets::ASCII.len(), 94);
+        assert_eq!(charsets::DECIMAL_DIGIT.len(), 10);
+        assert_eq!(charsets::LOWERCASE_ALPHABETIC.len(), 26);
     }
 
     #[test]
     fn no_duplicates_in_charsets() {
         for charset in ALL_INCLUDED_CHARSETS.iter() {
-            let unique_chars : Vec<char> = {
-                let mut chars = charset.to_vec();
-                chars.sort();
-                chars.dedup();
-                chars
-            };
-            assert_eq!(charset.len(), unique_chars.len());
+            assert!(!slice_contains_duplicates(charset));
         }
     }
 
@@ -105,17 +72,27 @@ mod tests {
     fn passwords_are_correct_length() {
         for charset in ALL_INCLUDED_CHARSETS.iter() {
             for len in 0..50 {
-                assert_eq!(random_password_characters(charset, len).len(), len);
+                assert_eq!(random_password_elements(charset, len).unwrap().len(), len);
             }
+        }
+
+        for len in 0..50 {
+            assert_eq!(random_password(charsets::ALPHANUMERIC, len, "").unwrap().len(), len);
+        }
+
+        // with separator
+        assert_eq!(random_password(charsets::ALPHANUMERIC, 0, ".").unwrap().len(), 0);
+        for len in 1..50 {
+            assert_eq!(random_password(charsets::ALPHANUMERIC, len, ".").unwrap().len(), len + len - 1);
         }
     }
 
     #[test]
     fn no_chars_outside_requested_charset() {
         for charset in ALL_INCLUDED_CHARSETS.iter() {
-            let password = random_password_characters(charset, 1000);
-            for ch in password {
-                assert!(charset.contains(&ch));
+            let password_elts = random_password_elements(charset, charset.len() * 5).unwrap();
+            for elt in password_elts {
+                assert!(charset.contains(&elt));
             }
         }
     }
@@ -123,16 +100,65 @@ mod tests {
     #[test]
     fn all_characters_seen_in_output_eventually() {
         for charset in ALL_INCLUDED_CHARSETS.iter() {
-            let password = random_password_characters(charset, charset.len() * 100);
+            let password_elts = random_password_elements(charset, charset.len() * 100).unwrap();
             for ch in charset.iter() {
-                assert!(password.contains(&ch));
+                assert!(password_elts.contains(&ch));
             }
         }
     }
 
-    // TODO: frequency analysis (test fail with at most 1/100,000 probability)
-    // #[test]
-    // fn frequency_analysis() {
+    #[test]
+    fn custom_character_set() {
+        let charset = vec!["0", "1"];
+        match random_password(&charset, 2, "").unwrap().as_ref() {
+            "00" => { },
+            "01" => { },
+            "10" => { },
+            "11" => { },
+            _ => panic!("Custom character set is broken")
+        };
+    }
 
-    // }
+    #[test]
+    #[should_panic(expected = "character set is too small")]
+    fn panics_on_empty_character_set() {
+        let _ = random_password(&vec![], 2, "");
+    }
+
+    #[test]
+    #[should_panic(expected = "character set is too small")]
+    fn panics_on_size_one_character_set() {
+        let _ = random_password(&vec!["a"], 2, "");
+    }
+
+    #[test]
+    fn separator_works() {
+        let charset = vec!["0", "1"];
+
+        match random_password(&charset, 1, "###").unwrap().as_ref() {
+            "0" => { },
+            "1" => { },
+            _ => panic!("Separator is broken for length-1 passwords")
+        };
+
+        match random_password(&charset, 2, "###").unwrap().as_ref() {
+            "0###0" => { },
+            "0###1" => { },
+            "1###0" => { },
+            "1###1" => { },
+            _ => panic!("Separator is broken for length-2 passwords")
+        };
+
+        match random_password(&charset, 3, "###").unwrap().as_ref() {
+            "0###0###0" => { },
+            "0###0###1" => { },
+            "0###1###0" => { },
+            "0###1###1" => { },
+            "1###0###0" => { },
+            "1###0###1" => { },
+            "1###1###0" => { },
+            "1###1###1" => { },
+            _ => panic!("Separator is broken for length-3 passwords")
+        };
+    }
 }

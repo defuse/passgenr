@@ -1,5 +1,8 @@
 # passgenr
 
+**THIS CODE IS UNDER CONSTRUCTION, IT SHOULD NOT BE RELIED ON TO GENERATE SECURE
+PASSWORDS YET.**
+
 `passgenr` is a Rust library for generating cryptographically-secure random
 passwords. It is a port of my earlier password generating tool,
 [passgen](https://github.com/defuse/passgen) (which was written in C).
@@ -40,9 +43,25 @@ C2A980F8DFCC686F389B5CB96D30701C22D0B7B6BF2D732F7CD1364D81D949CC
 
 ## Library Examples
 
+This crate is on [crates.io TODO actual link](TODO). To use it, add it to your
+dependencies in `Cargo.toml`...
+
 ```
-TODO
+[dependencies]
+passgenr = "0.1"
 ```
+
+...and add this to your crate root (`lib.rs` if you're writing a library, or
+`main.rs` if you're writing a binary):
+
+```
+extern crate passgenr;
+```
+
+TODO example
+
+TODO link to full docs
+
 
 ## Security Details
 

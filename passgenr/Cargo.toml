@@ -1,7 +1,8 @@
 [package]
-name = "passgen"
+name = "passgenr"
 version = "0.1.0"
 authors = ["Taylor Hornby <taylor@defuse.ca>"]
 
 [dependencies]
 rand = "0.4"
+getopts = "0.2"
