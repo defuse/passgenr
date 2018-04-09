@@ -17,23 +17,23 @@ TODO
 ## Command-Line Utility Examples
 
 ```
-$ passgen --ascii
-|;aeQ;_mLh$7!eLVtm3MUm|068El?<Va>)i=IK#+uv&{gN+}18bNp:BCuq[^,"B~
+$ passgenr --ascii
+|*H(f]*@XO;YX"vEOx_%3LDf}fyAuQ<_2=&W<|d*ZY#zH%{Wq20mruTo:G~jg-rd
 
-$ passgen --alpha
-g8168URzTJYuxhEjI3LTsoC9tRfwuwhZz4GtRFiJbPh3ZuhNvJs8qaHvb4OxdHL6
+$ passgenr --alpha
+PWPMBzF4KIUNGIK79S04NOgt51s5TJaqCTNd4loMkTjIZiHsrGMUrqE4DCrBCuay
 
-$ passgen --hex
-4BE6BDA72CB2BB6CC5E163B6209B7489733031C4D150DC013AA4477D26C863C8
+$ passgenr --hex
+0FB8DA7DF897D3E781D8F93D48A1FDA19C4B1CA96A3D78E1CB1BE46441AD7EE3
 
-$ passgen --digit
-4104130170392073625297173179140853172681003693080726492644488275
+$ passgenr --digit
+4685009459776989842380332148352094362440679705765781117806140754
 
-$ ./passgen --lower
-kbwbjothonqxxcwswofxiviasqvgzzemzwcqltfgmvnyljhbshpqerxyenqdxtgo
+$ passgenr --lower
+bjqxtuknhlqacsiwjansyavkaqlnyscsnxwowcgymlkwxzlilxbzsyovyoqwjdmw
 
-$ passgen --words
-wig.slime.sip.silas.joyce.whelm.rhino.facile.wacky.accrue............
+$ passgenr --words
+vocalist.uptown.bunch.feel.board.crock.few.teeter.product.intellect
 
 $ passgen --hex -p 5
 753924DC422047A0D9FFDDEE87BCF6BA65D992EE317178D1C77BDE46DAC13C42

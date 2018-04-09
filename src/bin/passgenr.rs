@@ -2,9 +2,6 @@ extern crate passgenr;
 extern crate getopts;
 use getopts::Options;
 
-// TODO: refactor this so that arguments are parsed into a struct, so that the argument parsing can
-// be unit-tested
-
 #[derive(Clone, Copy)]
 enum CommandLineCharset {
     Hex,
