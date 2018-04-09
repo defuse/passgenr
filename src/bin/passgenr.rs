@@ -16,7 +16,7 @@ enum CommandLineCharset {
 }
 
 const PASSWORD_LENGTH: usize = 64;
-const PASSWORD_WORD_LENGTH: usize = 10;
+const PASSWORD_WORD_COUNT: usize = 10;
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
@@ -30,7 +30,7 @@ fn main() {
         opts.optflag("n", "alpha", &format!("{} alphanumeric characters", PASSWORD_LENGTH));
         opts.optflag("d", "digit", &format!("{} decimal digits", PASSWORD_LENGTH));
         opts.optflag("l", "lower", &format!("{} lowercase alphabetic characters", PASSWORD_LENGTH));
-        opts.optflag("w", "words", &format!("{} random words from a list of {}", PASSWORD_WORD_LENGTH, passgenr::charsets::WORDS.len()));
+        opts.optflag("w", "words", &format!("{} random words from a list of {}", PASSWORD_WORD_COUNT, passgenr::charsets::WORDS.len()));
         opts.optflag("h", "help", "show this help menu");
         opts.optopt("p", "password-count", "number of passwords to generate", "N");
 
@@ -111,7 +111,7 @@ fn main() {
                 println!("{}", passgenr::random_password(passgenr::charsets::LOWERCASE_ALPHABETIC, PASSWORD_LENGTH, "").unwrap());
             },
             Some(CommandLineCharset::Words) => {
-                println!("{}", passgenr::random_password(passgenr::charsets::WORDS, PASSWORD_LENGTH, ".").unwrap());
+                println!("{}", passgenr::random_password(passgenr::charsets::WORDS, PASSWORD_WORD_COUNT, ".").unwrap());
             }
         }
     }
