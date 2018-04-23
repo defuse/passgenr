@@ -1,6 +1,7 @@
 # passgenr
 
 [![Build Status](https://travis-ci.org/defuse/passgenr.svg?branch=master)](https://travis-ci.org/defuse/passgenr)
+[![codecov](https://codecov.io/gh/defuse/passgenr/branch/master/graph/badge.svg)](https://codecov.io/gh/defuse/passgenr)
 [![crates.io](https://img.shields.io/crates/d/passgenr.svg)](https://crates.io/crates/passgenr)
 [![crates.io](https://img.shields.io/crates/v/passgenr.svg)](https://crates.io/crates/passgenr)
 [![docs.rs](https://docs.rs/passgenr/badge.svg)](https://docs.rs/passgenr/)
