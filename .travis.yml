@@ -11,7 +11,7 @@ matrix:
 addons:
     apt:
         packages:
-            - libcurl-openssl-dev
+            - libcurl4-openssl-dev
             - libelf-dev
             - libdw-dev
             - cmake
